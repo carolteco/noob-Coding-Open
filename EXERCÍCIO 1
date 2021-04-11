@@ -1,0 +1,124 @@
+#include<stdio.h>							   
+#include<stdlib.h>
+#include<string.h>
+#include<locale.h>
+
+
+int menu();
+
+void InserirMusica(int num);
+
+void Listar();
+
+struct playlist {
+	int dado;
+	struct playlist* prox;
+} *Head;
+
+int  main() {
+
+	setlocale(LC_ALL, "Portuguese");
+
+	char musica[50], banda[50];
+	float duracao;
+	int op, c = 0;
+	
+	
+	Head = NULL;
+
+	while (1) {
+		op = menu();
+		switch (op) {
+		case 1:
+			printf("Digite o nome do Artista / Banda: ");
+			while ((banda[c] = getchar() != '\n' && c < 48)) {
+				c++;
+			}
+
+			banda[c++] = '\0';
+
+			printf("Digite o nome da Música: ");
+			("%s", &musica);
+
+			while ((musica[c] = getchar() != '\n' && c < 48)) {
+				c++;
+			}
+
+			musica[c++] = '\0';
+
+			printf("Digite a duração da Música ");
+			scanf_s("%f", &duracao);
+
+			/*while ((c = getchar()) != '\n' && c != EOF) {} //  limpando o buffer do teclado.
+			InserirMusica;*/
+
+			break;
+		case 2:
+			Listar();
+			break;
+		case 3:
+			return 0;
+		default:
+			printf("Invalido\n");
+			
+				}
+	}
+	return 0;
+}
+
+int menu() {
+	int op, c;
+	system("Cls");
+
+	printf("1. Inserir Músicas na Playlist \n\n");
+	printf("2. Mostrar Playlist \n\n");
+	printf("3. Sair \n\n");
+	
+	printf("Digite sua escolha: ");
+
+	scanf_s("%d", &op);
+	while ((c = getchar()) != '\n' && c != EOF) {} // sempre limpe o buffer do teclado.
+
+	system("Cls");
+	return op;
+}
+
+void InserirMusica(int num)
+{
+	playlist* NovaMusica;
+	NovaMusica = (struct playlist *)malloc(sizeof(struct playlist));
+	NovaMusica->dado = num;
+
+	if (Head == NULL)
+	{
+		Head = NovaMusica;
+		Head->prox = NULL;
+	}
+	else
+	{
+		NovaMusica->prox = Head;
+		Head = NovaMusica;
+	}
+}
+
+
+
+
+void Listar() {
+
+	playlist* Varredura;
+	Varredura = (struct playlist*)malloc(sizeof(struct playlist));
+
+	Varredura = Head;
+	if (Varredura == NULL) {
+		return;
+	}
+	while (Varredura != NULL) {
+		printf("%d ", Varredura->dado);
+		Varredura = Varredura->prox;
+	}
+	printf("\n");
+
+	system("pause");
+	return;
+}
