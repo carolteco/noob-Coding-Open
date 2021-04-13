@@ -1,0 +1,185 @@
+#include<stdio.h>							   
+#include<stdlib.h>
+#include<string.h>
+#include<locale.h> // declarando as bibliotecas necessárias
+
+
+int menu();
+
+void InserirMusica(int num); //cabeçalho da função que insere novas músicas
+
+void Listar(); //cabeçalho da função que lista as músicas salvas
+
+
+
+struct playlist {
+	char banda;
+	char musica;
+	float duracao;
+
+	struct playlist* prox;
+
+} *Head;
+
+
+int  main() { //bloco principal do algoritmo
+
+	setlocale(LC_ALL, "Portuguese");
+
+	char musica[100], banda[100];
+	float duracao;
+	int op, c = 0;
+	
+	
+	Head = NULL;
+
+	while (1) {
+
+		op = menu();
+
+		switch (op) {
+
+		case 1:
+
+			printf("Digite o nome do Artista / Banda: ");
+
+			while ((banda[c] = getchar() != '\n' && c < 98)) { 
+				c++;
+
+			} //faz a captura do nome da banda
+
+			banda[c++] = '\0';
+				
+			printf_s("\n");
+
+			printf_s("Digite o nome da Música: ");
+
+			("%s", &musica);
+
+			while ((musica[c] = getchar() != '\n' && c < 98)) {
+				c++;
+
+			} // faz a captura do nome da música
+
+			musica[c++] = '\0';
+
+			printf_s("\n");
+
+			printf_s("Digite a duração da Música ");
+
+			scanf_s("%f", &duracao); // faz a captura do tempo de duração da música
+
+			
+			break;
+
+		case 2:
+
+			Listar(); // lista as informações salvas
+						
+			printf_s("\n");
+
+			break;
+
+		case 3:
+
+			return 0;
+
+		default:
+
+			printf_s("Invalido\n");
+			
+				}
+	}
+	return 0;
+}
+
+int menu() {
+	int op, c;
+
+	system("Cls");
+
+	printf_s("\-------PLAYER DE MÚSICAS-------");
+
+	printf_s("\n\n");
+
+	printf_s("1. Inserir Músicas na Playlist \n\n"); // opções de menu 
+
+	printf_s("2. Mostrar Playlist \n\n");
+
+	printf_s("3. Sair \n\n");
+
+	printf_s("-------------------------------");
+
+	printf_s("\n");
+	
+	printf("Digite sua escolha: ");
+
+	printf_s("\n");
+
+	scanf_s("%d", &op);
+	while ((c = getchar()) != '\n' && c != EOF) {} // sempre limpe o buffer do teclado.
+
+	system("Cls");
+	return op;
+}
+
+void InserirMusica(int num)
+
+// função que faz toda a alocação e substituição do Head por um novo Head
+
+{
+	playlist* NovaMusica;
+	NovaMusica = (struct playlist *)malloc(sizeof(struct playlist));
+	NovaMusica->musica = num;
+
+	if (Head == NULL)
+	{
+		Head = NovaMusica;
+		Head->prox = NULL;
+	}
+	else
+	{
+		NovaMusica->prox = Head;
+		Head = NovaMusica;
+	}
+}
+
+void Listar() {
+
+	// Função para listar tudo que foi alocado na memória
+
+	playlist* Varredura;
+	Varredura = (struct playlist*)malloc(sizeof(struct playlist));
+
+	Varredura = Head;
+
+	if (Varredura == NULL) {
+		return;
+	}
+	while (Varredura != NULL) {
+		printf_s("----------------------------------------");
+
+		printf_s("\n");
+
+		printf_s("Banda / Artista: %s ", Varredura->banda);
+
+		printf_s("\n");
+
+		printf_s("Música: %s ", Varredura->musica);
+
+		printf_s("\n");
+
+		printf_s("Duração: %f ", Varredura->duracao);
+
+		printf_s("\n");
+
+		printf_s("----------------------------------------");
+
+		Varredura = Varredura->prox;
+	}
+
+	printf_s("\n");
+
+	system("pause");
+	return;
+}
